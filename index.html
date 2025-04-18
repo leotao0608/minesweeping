@@ -2,17 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mine Sweeping</title>
+  <title>Mine Sweeper</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>Mine Sweeping</h1>
+  <h1><b>Mine Sweeper</b></h1>
   <div id="button_container" style="display: block;">
     <button class="button_mode" onclick="set_mode(0)">Simple Mode</button>
     <button class="button_mode" onclick="set_mode(1)">Medium Mode</button>
     <button class="button_mode" onclick="set_mode(2)">Hard Mode</button>
     <button class="button_mode" onclick="set_mode(3)">Custom Mode</button>
+  </div>
+  <div id="custom_inputs" style="display: none;">
+    <label for="custom_rows">Rows:</label>
+    <input type="number" id="custom_rows" placeholder="Rows" min="2" required>
+    <br>
+    <label for="custom_cols">Columns:</label>
+    <input type="number" id="custom_cols" placeholder="Columns" min="2" required>
+    <br>
+    <label for="custom_mines">Mines(must be less than the total number of cells):</label>
+    <br>
+    <input type="number" id="custom_mines" placeholder="Mines" min="1" required>
+    <br>
+    <button id="set_size" onclick="set_custom_size()">Set Size</button>
   </div>
   <button id="back" onclick="quit()">Back</button>
   <button id="hint" onclick="show_mines()">Show Mines</button>
