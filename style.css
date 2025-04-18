@@ -13,13 +13,14 @@
     width: 110px;
 }
 #game_board{
+    background-color: rgb(240, 248, 255);
+    
     display: grid;
-    grid-template-columns: repeat(10, 40px); /* Adjust the number of columns and cell size */
-    grid-template-rows: repeat(10, 40px);    /* Adjust the number of rows and cell size */
-    gap: 5px;
+    gap: 3px;
+    padding: 10px;
 }
 .board_cell{
-    height: 30px;
-    width: 30px;
-    background-color:aquamarine;
+    height: 20px;
+    width: 20px;
+    background-color:rgb(200, 230, 201);
 }

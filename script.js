@@ -21,16 +21,22 @@ function fill_grid(x, y, mine_num){
         board[X][Y]=1;
         n--;
     }
-    create_board(board);
+    create_board(board,x,y);
 }
-function create_board(board){
+function create_board(board,x,y){
     let board_container=document.getElementById("game_board");
     board_container.innerHTML="";
+    board_container.style.display = "grid";
+    board_container.style.gridTemplateColumns = `repeat(${y}, 20px)`;
+    board_container.style.gridTemplateRows = `repeat(${x}, 20px)`;
     for(let i=0;i<board.length;i++){
         for(let j=0;j<board[i].length;j++){
             let cell=document.createElement("div");
             cell.classList.add("board_cell");
             cell.addEventListener("click",function(){click_cell(i, j, board);});
+            
+
+            
             board_container.appendChild(cell);
         }
     }
