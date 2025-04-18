@@ -1,4 +1,5 @@
 function set_mode(diff){//difficulty
+    document.getElementById("back").style.display="block";
     document.getElementById("button_container").style.display="none";
     if(diff==0){        //easy
         fill_grid(9, 9, 10)
@@ -26,6 +27,7 @@ function fill_grid(x, y, mine_num){
 function create_board(board,x,y){
     let board_container=document.getElementById("game_board");
     board_container.innerHTML="";
+    board_container.style.display="block";
     board_container.style.display = "grid";
     board_container.style.gridTemplateColumns = `repeat(${y}, 20px)`;
     board_container.style.gridTemplateRows = `repeat(${x}, 20px)`;
@@ -34,13 +36,16 @@ function create_board(board,x,y){
             let cell=document.createElement("div");
             cell.classList.add("board_cell");
             cell.addEventListener("click",function(){click_cell(i, j, board);});
-            
-
-            
             board_container.appendChild(cell);
         }
     }
 }
 function click_cell(x, y, board){
 
+}
+function quit(){
+    document.getElementById("game_board").innerHTML="";
+    document.getElementById("game_board").style.display="none";
+    document.getElementById("button_container").style.display="block";
+    document.getElementById("back").style.display="none";
 }

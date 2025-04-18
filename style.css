@@ -12,12 +12,21 @@
     height: 40px;
     width: 110px;
 }
+#back{
+    display: none;
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+    background-color: rgb(138, 212, 218);
+    height: 40px;
+    width: 110px;
+}
 #game_board{
     background-color: rgb(240, 248, 255);
-    
     display: grid;
     gap: 3px;
     padding: 10px;
+    margin-left: 200px;
 }
 .board_cell{
     height: 20px;
