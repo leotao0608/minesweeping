@@ -44,6 +44,7 @@
     border: 2px solid black;
     height: 30px;
     width: 30px;
+    display: none;
     background-color: rgb(138, 212, 218);
 }
 #winning{
@@ -54,4 +55,12 @@
     font-weight: bold;
     color: rgb(120, 211, 249);
     text-align: center;
+}
+#set_size{
+    text-align: center;
+    margin: 10px;
+    background-color: rgb(138, 212, 218);
+    height: 30px;
+    width: 90px;
+    border: 2px solid black;
 }
