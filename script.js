@@ -1,13 +1,19 @@
 let action=-1;   //1 reveal a cell; -1 flag a cell
+let display_mine=-1;    //-1 hide; 1 display
+let _board=null;
 function set_mode(diff){//difficulty
     document.getElementById("back").style.display="block";
+    document.getElementById("hint").style.display="block";
+    document.getElementById("winning").style.display="none";
     document.getElementById("button_container").style.display="none";
     if(diff==0){        //easy
-        fill_grid(9, 9, 10)
+        fill_grid(9, 9, 10);
     }else if(diff==1){  //medium
-        fill_grid(19, 19, 40)
-    }else{              //hard
-        fill_grid(19, 30, 99)
+        fill_grid(19, 19, 40);
+    }else if(diff==2){              //hard
+        fill_grid(19, 30, 99);
+    }else{
+        fill_grid(2,2,4);
     }
 }
 function fill_grid(x, y, mine_num){
@@ -23,6 +29,7 @@ function fill_grid(x, y, mine_num){
         board[X][Y]=1;
         n--;
     }
+    _board=board;
     create_board(board,x,y);
 }
 function create_board(board,x,y){
@@ -41,25 +48,97 @@ function create_board(board,x,y){
             board_container.appendChild(cell);
         }
     }
+    
 }
 function click_cell(x, y, board){
+    
     if(action==-1){         //reveal a cell
         if(board[x][y]==1){
-            //document.getElementById(`${x}-${y}-cell`).innerHTML = "M";            ???
-            quit();
+            //quit();
+            show_mines(board);
             alert("You died hahaha...");
         }else{
             DFS(x,y,board);
         }
     }
     if(action === 1&&(document.getElementById(`${x}-${y}-cell`).innerHTML === ""||
-    document.getElementById(`${x}-${y}-cell`).innerHTML === "🚩")){
+    document.getElementById(`${x}-${y}-cell`).innerHTML === "🚩")&&
+    document.getElementById(`${x}-${y}-cell`).style.backgroundColor!="rgb(192, 192, 192)"){ //Place a flag
         if(document.getElementById(`${x}-${y}-cell`).innerHTML === "🚩"){
             document.getElementById(`${x}-${y}-cell`).innerHTML = "";
+            if(document.getElementById(`${x}-${y}-cell`).style.backgroundColor==="rgb(208, 84, 84)")
+            document.getElementById(`${x}-${y}-cell`).style.backgroundColor="rgb(200, 230, 201)";
+            
         }else{
             document.getElementById(`${x}-${y}-cell`).innerHTML = "🚩";
         }
        
+    }
+    check_completion(board);
+}
+function check_completion(board){
+    for(let i=0;i<board.length;i++){
+        for(let j=0;j<board[0].length;j++){
+            const cell = document.getElementById(`${i}-${j}-cell`);
+            const isMine = board[i][j] === 1;
+            const isFlagged = cell.innerHTML === "🚩";
+            const isRevealed = cell.style.backgroundColor === "rgb(192, 192, 192)";
+
+            if (isMine && !isFlagged) {
+                return;
+            }
+
+            if (!isMine && !isRevealed) {
+                return; 
+            }
+        }
+    }
+    document.getElementById("winning").innerHTML = "🎉 You Win!";
+    document.getElementById("winning").style.display = "block";
+}    
+
+function show_mines(){
+    if(!_board){
+        return;
+    }
+    display_mine*=-1;
+    if(display_mine===1){
+        document.getElementById("hint").style.backgroundColor="rgb(168, 200, 213)";
+        document.getElementById("hint").style.border="3px solid black";
+        for(let i=0;i<_board.length;i++){
+            for(let j=0;j<_board[0].length;j++){
+                if(_board[i][j]===1){
+                    const cell = document.getElementById(`${i}-${j}-cell`);
+                    const img = document.createElement("img");
+                    if(cell.innerHTML==="🚩"){
+                        continue;
+                    }
+                    img.src = "images/mine_icon.png";
+                    img.style.width = "100%";   
+                    img.style.height = "100%";
+                    
+                    cell.innerHTML="";
+                    cell.appendChild(img);
+                }else if(document.getElementById(`${i}-${j}-cell`).innerHTML==="🚩"){
+                    document.getElementById(`${i}-${j}-cell`).style.backgroundColor="rgb(208, 84, 84)";
+                }
+            }
+        }
+    }else{
+        document.getElementById("hint").style.backgroundColor="rgb(138, 212, 218)";
+        document.getElementById("hint").style.border="2px solid black";
+        for(let i=0;i<_board.length;i++){
+            for(let j=0;j<_board[0].length;j++){
+                if(_board[i][j]===1){
+                    const cell = document.getElementById(`${i}-${j}-cell`);
+                    if(cell.innerHTML!="🚩"){
+                        cell.innerHTML="";
+                    }
+                }else if(document.getElementById(`${i}-${j}-cell`).innerHTML==="🚩"){
+                    document.getElementById(`${i}-${j}-cell`).style.backgroundColor="rgb(200, 230, 201)";
+                }
+            }
+        }
     }
     
 }
@@ -102,7 +181,7 @@ function DFS(x, y, board, visited = null) {
 }
 
 function count_mines(x,y,board){
-    document.getElementById(`${x}-${y}-cell`).style.backgroundColor="rgb(168, 203, 205)";
+    document.getElementById(`${x}-${y}-cell`).style.backgroundColor="rgb(192, 192, 192)";
     let count=0;
     const rows = board.length;
     const cols = board[0].length;
@@ -114,35 +193,14 @@ function count_mines(x,y,board){
     if (x - 1 >= 0 && board[x - 1][y]) count++;
     if (y + 1 < cols && board[x][y + 1]) count++;
     if (y - 1 >= 0 && board[x][y - 1]) count++;
-    switch(count){
-        case 0:
-            document.getElementById(`${x}-${y}-cell`).innerHTML="0";
-            document.getElementById(`${x}-${y}-cell`).textContent="";
-            break;    
-        case 1:
-            document.getElementById(`${x}-${y}-cell`).innerHTML="1";
-            break;
-        case 2:
-            document.getElementById(`${x}-${y}-cell`).innerHTML="2";
-            break;
-        case 3:
-            document.getElementById(`${x}-${y}-cell`).innerHTML="3";
-            break;
-        case 4:
-            document.getElementById(`${x}-${y}-cell`).innerHTML="4";
-            break;
-        case 5:
-            document.getElementById(`${x}-${y}-cell`).innerHTML="5";
-            break;
-        case 6:
-            document.getElementById(`${x}-${y}-cell`).innerHTML="6";
-            break;
-        case 7:
-            document.getElementById(`${x}-${y}-cell`).innerHTML="7";
-            break;
-        case 8:
-            document.getElementById(`${x}-${y}-cell`).innerHTML="8";        
-            break;            
+    const cell = document.getElementById(`${x}-${y}-cell`);
+    cell.innerHTML = ""; 
+    if (count > 0 && count <= 8) {
+        const img = document.createElement("img");
+        img.src = `images/${count}.png`;
+        img.style.width = "100%";   
+        img.style.height = "100%";
+        cell.appendChild(img);
     }
 }
 function click_flag(){
@@ -162,4 +220,5 @@ function quit(){
     document.getElementById("game_board").style.display="none";
     document.getElementById("button_container").style.display="block";
     document.getElementById("back").style.display="none";
+    document.getElementById("hint").style.display="none";
 }
