@@ -111,11 +111,6 @@ function check_completion(board){
             const isMine = board[i][j] === 1;
             const isFlagged = cell.innerHTML === "🚩";
             const isRevealed = cell.style.backgroundColor === "rgb(192, 192, 192)";
-
-            if (isMine && !isFlagged) {
-                return;
-            }
-
             if (!isMine && !isRevealed) {
                 return; 
             }
