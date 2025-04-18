@@ -1,7 +1,14 @@
+#button_container{
+    display: flex;              /* Enable flexbox */
+    justify-content: center;    /* Center buttons horizontally */
+    align-items: center;        /* Center buttons vertically */
+    height: 100vh;    
+}
 .button_mode{
     display: inline-block;
+    text-align: center;
     margin: 10px;
     background-color: rgb(138, 212, 218);
     height: 40px;
-    width: 90px;
+    width: 110px;
 }
