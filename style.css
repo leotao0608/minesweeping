@@ -1,5 +1,7 @@
-#button_mode{
-    background-color: blue;
-    height: 50px;
-    width: 100px;
+.button_mode{
+    display: inline-block;
+    margin: 10px;
+    background-color: rgb(138, 212, 218);
+    height: 40px;
+    width: 90px;
 }
