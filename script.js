@@ -2,9 +2,12 @@ let action=-1;   //1 reveal a cell; -1 flag a cell
 let display_mine=-1;    //-1 hide; 1 display
 let _board=null;
 function set_mode(diff){//difficulty
+    document.getElementById("custom_inputs").style.display="none";
     document.getElementById("back").style.display="block";
     document.getElementById("hint").style.display="block";
     document.getElementById("winning").style.display="none";
+    document.getElementById("flag").style.display="block";
+
     document.getElementById("button_container").style.display="none";
     if(diff==0){        //easy
         fill_grid(9, 9, 10);
@@ -12,10 +15,35 @@ function set_mode(diff){//difficulty
         fill_grid(19, 19, 40);
     }else if(diff==2){              //hard
         fill_grid(19, 30, 99);
-    }else{
-        fill_grid(2,2,4);
+    }else{              //custom size
+        document.getElementById("hint").style.display="none";
+        document.getElementById("flag").style.display="none";
+        
+        document.getElementById("custom_inputs").style.display="block";
+        
     }
 }
+function set_custom_size() {
+    //get input
+    const rows = parseInt(document.getElementById("custom_rows").value);
+    const cols = parseInt(document.getElementById("custom_cols").value);
+    const mines = parseInt(document.getElementById("custom_mines").value);
+
+    // if input is valid
+    if (rows >= 2 && cols >= 2 && mines >= 1 && mines <= rows * cols) {
+        document.getElementById("custom_inputs").style.display = "none";  
+        
+        document.getElementById("hint").style.display="block";
+        document.getElementById("flag").style.display="block";
+        fill_grid(rows, cols, mines); 
+        document.getElementById("custom_rows").value = "";
+        document.getElementById("custom_cols").value = "";
+        document.getElementById("custom_mines").value = "";
+    } else {
+        alert("Please enter valid values for rows, columns, and mines.");
+    }
+}
+
 function fill_grid(x, y, mine_num){
     let board = Array(x).fill().map(() => Array(y).fill(0));   //0 no mine; 1 mine
     let n=mine_num;
