@@ -45,7 +45,7 @@ function create_board(board,x,y){
 function click_cell(x, y, board){
     if(action==-1){         //reveal a cell
         if(board[x][y]==1){
-            document.getElementById(`${x}-${y}-cell`).innerHTML = "M";
+            //document.getElementById(`${x}-${y}-cell`).innerHTML = "M";            ???
             quit();
             alert("You died hahaha...");
         }else{
