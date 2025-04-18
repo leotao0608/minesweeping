@@ -14,7 +14,6 @@
 }
 #back{
     display: none;
-    display: inline-block;
     text-align: center;
     margin: 10px;
     background-color: rgb(138, 212, 218);
@@ -32,4 +31,10 @@
     height: 20px;
     width: 20px;
     background-color:rgb(200, 230, 201);
+}
+#flag{
+    border: 2px solid black;
+    height: 30px;
+    width: 30px;
+    background-color: rgb(138, 212, 218);
 }
